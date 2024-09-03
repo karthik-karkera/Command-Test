@@ -26,12 +26,10 @@ if ($compiledArtifactFolder -ne "none"){
   write-output "RUNAS AUTO" >> script.scan
   write-output "of `"$CI_PROJECT_DIR\$compiledArtifactFolder`"" >> script.scan
   write-output "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`"" >> script.scan
-  $scanCommand = "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`""
   write-output "report Findings pdf-detailed `"$aseAppName-$CI_JOB_ID.pdf`" `"$aseAppName-$CI_JOB_ID.ozasmt`" -includeSrcBefore:5 -includeSrcAfter:5 -includeTrace:definitive -includeTrace:suspect -includeHowToFix" >> script.scan
   write-output "pa `"$aseAppName-$CI_JOB_ID.ozasmt`"" >> script.scan
   write-output "exit" >> script.scan
 
-  write-host "Scan Command1 : $scanCommand"
   
   write-host "Config file created for compiled folder ($CI_PROJECT_DIR\$compiledArtifactFolder)."
 }
