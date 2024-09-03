@@ -15,7 +15,6 @@
 write-host "======== Step: Creating a config scan folder ========"
 # Creating Appscan Source script file. It is used with AppScanSrcCli to run scans reading folder content and selecting automatically the language (Open Folder command).
 if ($compiledArtifactFolder -ne "none"){
-  echo "if1"
   $content=Get-ChildItem -Path $compiledArtifactFolder -filter "*.zip"
   if ($content){
     write-host "There is a compiled files compressed in folder $compiledArtifactFolder."
@@ -27,15 +26,16 @@ if ($compiledArtifactFolder -ne "none"){
   write-output "RUNAS AUTO" >> script.scan
   write-output "of `"$CI_PROJECT_DIR\$compiledArtifactFolder`"" >> script.scan
   write-output "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`"" >> script.scan
+  $scanCommand = "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`""
   write-output "report Findings pdf-detailed `"$aseAppName-$CI_JOB_ID.pdf`" `"$aseAppName-$CI_JOB_ID.ozasmt`" -includeSrcBefore:5 -includeSrcAfter:5 -includeTrace:definitive -includeTrace:suspect -includeHowToFix" >> script.scan
   write-output "pa `"$aseAppName-$CI_JOB_ID.ozasmt`"" >> script.scan
   write-output "exit" >> script.scan
 
-  echo "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`""
+  write-host "Scan Command1 : $scanCommand"
+
   write-host "Config file created for compiled folder ($CI_PROJECT_DIR\$compiledArtifactFolder)."
 }
 else{
-  echo "if2"
   write-output "login_file $aseHostname `"$aseToken`" -acceptssl" > script.scan
   write-output "RUNAS AUTO" >> script.scan
   write-output "of `"$CI_PROJECT_DIR`"" >> script.scan
@@ -43,7 +43,6 @@ else{
   write-output "report Findings pdf-detailed `"$aseAppName-$CI_JOB_ID.pdf`" `"$aseAppName-$CI_JOB_ID.ozasmt`" -includeSrcBefore:5 -includeSrcAfter:5 -includeTrace:definitive -includeTrace:suspect -includeHowToFix" >> script.scan
   write-output "pa `"$aseAppName-$CI_JOB_ID.ozasmt`"" >> script.scan
   write-output "exit" >> script.scan
-  echo "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`" -sourcecodeonly true"
-  
+
   write-host "Config file created (source code only scan)."
 }
