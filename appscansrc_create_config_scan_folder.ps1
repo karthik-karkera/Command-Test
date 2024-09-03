@@ -31,7 +31,7 @@ if ($compiledArtifactFolder -ne "none"){
   write-output "pa `"$aseAppName-$CI_JOB_ID.ozasmt`"" >> script.scan
   write-output "exit" >> script.scan
 
-  
+  echo "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`""
   write-host "Config file created for compiled folder ($CI_PROJECT_DIR\$compiledArtifactFolder)."
 }
 else{
@@ -43,6 +43,7 @@ else{
   write-output "report Findings pdf-detailed `"$aseAppName-$CI_JOB_ID.pdf`" `"$aseAppName-$CI_JOB_ID.ozasmt`" -includeSrcBefore:5 -includeSrcAfter:5 -includeTrace:definitive -includeTrace:suspect -includeHowToFix" >> script.scan
   write-output "pa `"$aseAppName-$CI_JOB_ID.ozasmt`"" >> script.scan
   write-output "exit" >> script.scan
+  echo "sc `"$aseAppName-$CI_JOB_ID.ozasmt`" -scanconfig `"$scanConfig`" -name `"$aseAppName-$CI_JOB_ID`" -sourcecodeonly true"
   
   write-host "Config file created (source code only scan)."
 }
